@@ -3,15 +3,15 @@
     <Menu ref="leftMenu" class="nav-menu" width="200px" accordion active-name="/system/main" @on-select="actionTo">
       <Submenu v-if="route.children&&route.children.length>0&&!route.noDropdown" v-for="(route,index) in $router.options.routes[1].children" :key="index" :name="route.path">
         <template slot="title">
-          <Icon :type="route.icon"></Icon>
+          <Icon :type="route.icon" size="20"></Icon>
           {{route.name}}
         </template>
         <Menu-item v-for="(routeChild,index) in  route.children" :key="index" :name="routeChild.path">{{routeChild.name}}
-          <Icon v-if="routeChild.icon" :type="routeChild.icon"></Icon>
+          <Icon v-if="routeChild.icon" :type="routeChild.icon" size="20"></Icon>
         </Menu-item>
       </Submenu>
       <Menu-item v-else :name="route.path">
-        <Icon :type="route.icon"></Icon>
+        <Icon :type="route.icon" size="20"></Icon>
         {{route.name}}
       </Menu-item>
     </Menu>
@@ -20,9 +20,9 @@
 <script>
 import { mapGetters } from 'vuex';
 export default {
-   computed: {
-        ...mapGetters(['navs'])
-    },
+  computed: {
+    ...mapGetters(['navs'])
+  },
   data() {
     return {
     }
@@ -41,7 +41,9 @@ export default {
   width: 200px;
   height: 100%;
   position: fixed;
-  border-top: solid 1px #DDDEE1;
+  top: 60px;
+  left: 0;
+  /* border-top: solid 1px #DDDEE1; */
 }
 
 .nav-menu {

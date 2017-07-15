@@ -24,8 +24,8 @@ const router = new Router({
       redirect: '/system/main',
       icon: 'icon-computer',
       children: [
-        { name: '控制面板', path: '/system/main', icon: 'home', component: Main },
-        { name: '系统配置', path: '/system/config', icon: 'android-settings', component: Config },
+        { name: '控制面板', path: '/system/main', icon: 'social-windows-outline', component: Main },
+        { name: '系统配置', path: '/system/config', icon: 'ios-gear-outline', component: Config },
         {
           name: '内容管理', path: '/system/content', icon: 'ios-paper-outline', children: [
             { name: '内容分类', path: '/system/content/types' }, 
@@ -34,12 +34,24 @@ const router = new Router({
           ]
           //,noDropdown:true
         },
-        { name: '页面管理', path: '/system/pages', icon: 'icon-pageset' },
-        { name: '产品管理', path: '/system/product', icon: 'icon-publishgoods_fill' },
-        { name: '评论管理', path: '/system/comment', icon: 'icon-message' },
-        { name: '用户管理', path: '/system/users', icon: 'icon-people' },
-        { name: '数据管理', path: '/system/datas', icon: 'icon-shujuku' },
-        { name: '系统统计', path: '/system/counts', icon: 'icon-tiaoxingtu-xianxing' }]
+        { name: '页面管理', path: '/system/pages', icon: 'document' ,children:[
+          {name: '自定义单页',path: '/system/pages/custom'},
+          {name: '模板页',path: '/system/pages/template'}
+        ]},
+        { name: '产品管理', path: '/system/product', icon: 'bag' ,children: [
+          {name: '产品分类', path: '/system/product/types'},
+          {name: '产品列表', path: '/system/product/list'},
+          {name: '产品模型', path: '/system/product/model'}
+        ]},
+        { name: '评论管理', path: '/system/comment', icon: 'ios-chatboxes-outline' },
+        { name: '用户管理', path: '/system/users', icon: 'person-stalker',children:[
+          {name:'用户组',path:'/system/users/group'},
+          {name:'权限',path:'/system/users/permission'},
+          {name:'用户列表',path:'/system/users/list'}
+        ]},
+        { name: '计划任务', path: '/system/tasks', icon: 'ios-alarm-outline' },
+        { name: '数据管理', path: '/system/datas', icon: 'android-cloud-outline' },
+        { name: '系统统计', path: '/system/counts', icon: 'stats-bars' }]
     }
     , {
       path: '/system/login',

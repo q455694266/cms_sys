@@ -5,7 +5,7 @@
         </div>
         <div class="top-control">
             <Row type="flex">
-                <Col class="top-left" span="18" push="6">
+                <Col class="top-right" span="18" push="6">
                 <Button-group class="btn-control" size="large">
                     <Button type="ghost">帮助</Button>
                     <Button type="ghost">清除缓存</Button>
@@ -27,24 +27,47 @@
                 </Button-group>
     
                 </Col>
-                <Col class="top-right" span="6" pull="18"> 666
+                <Col class="top-left" span="6" pull="18">
+                <Button-group>
+                    <Button type="ghost" @click="handleExpand">
+                        <Icon type="navicon" size="20"></Icon>
+                    </Button>
+                    <Button type="ghost" @click="handleFullscreen">
+                        <Icon :type="minMaxIcon" size="20"></Icon>
+                    </Button>
+                    <Button type="ghost">
+                        <Icon type="printer" size="20"></Icon>
+                    </Button>
+                </Button-group>
                 </Col>
             </Row>
         </div>
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
+    computed: {
+        ...mapGetters(['layout'])
+    },
     data() {
         return {
-
+            minMaxIcon: 'arrow-expand'
         }
     }, methods: {
-        handleSelect() {
-            // alert(123);
+        handleExpand() {
+            this.layout.isExpand = !this.layout.isExpand;
+        },
+        handleFullscreen() {
+            this.layout.isFullScreen = !this.layout.isFullScreen;
+            
         }
-
     }, mounted() {
+        
+    },watch:{
+        'layout.isFullScreen':function(){
+            this.minMaxIcon = this.layout.isFullScreen?'arrow-shrink':'arrow-expand';
+        }
     }
 
 }
@@ -52,6 +75,12 @@ export default {
 <style scoped>
 .layout-top {
     height: 60px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    border-bottom: solid 1px #dddee1;
+    background: #FFF;
 }
 
 .logo {
@@ -112,9 +141,12 @@ export default {
     -moz-transition: -moz-transform 0.2s ease-out;
     transition: transform 0.2s ease-out;
 }
-.top-left {}
+
+.top-left .ivu-btn-group {
+    margin-top: 20px;
+}
 
 .top-right {
-    background: yellow;
+    /* background: yellow; */
 }
 </style>

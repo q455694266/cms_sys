@@ -20,7 +20,7 @@ SYSUSER.allow.forEach(o => {
 });
 
 //---------------------------------
-
+//iView.Message.config({top:300});
 router.beforeEach((to, from, next) => {
     if (SYSUSER.urls.find(url => url == to.fullPath)) {
         //设置当前导航的路由URL

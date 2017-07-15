@@ -3,3 +3,45 @@
   padding: 0;
   height: 100%;
 }
+
+
+
+.layout-body {
+    height: 100%;
+    background: #DEDEDE;
+    position: relative;
+    padding-top: 60px;
+    margin-left: 200px;
+    z-index: 1;
+    padding-top: 60px;
+}
+
+.layout-body,
+.layout-left {
+    transition-property: margin-left,left;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+    /* Firefox 4 */
+    -moz-transition-property: margin-left,left;
+    -moz-transition-duration: 0.2s;
+    -moz-transition-timing-function: linear;
+    /* Safari 和 Chrome */
+    -webkit-transition-property: margin-left,left;
+    -webkit-transition-duration: 0.2s;
+    -webkit-transition-timing-function: linear;
+    /* Opera */
+    -o-transition-property: margin-left,left;
+    -o-transition-duration: 0.2s;
+    -o-transition-timing-function: linear;
+}
+.layout-footer {
+    height: 30px;
+    background-color: #f3f3f3;
+    position: absolute;
+    bottom: 0;
+    font-size: 14px;
+    text-align: center;
+    padding-top: 5px;
+    width: 100%;
+    z-index: 999;
+}
