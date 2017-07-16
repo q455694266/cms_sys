@@ -2,11 +2,8 @@
     <div class="container" ref="con">
         <layoutTop></layoutTop>
         <layoutLeft ref="leftNav"></layoutLeft>
-        <div ref="mainBody" class="layout-body">
-            <Row>
-                <Col class="left" span="18">555555</Col>
-                <Col class="left" span="6">77777777</Col>
-            </Row>
+        <div ref="mainBody" class="layout-body ToPrint">
+            <router-view></router-view>
             <div class="layout-footer">版权所有www.ziyaweb.com 2016-2018</div>
         </div>
     

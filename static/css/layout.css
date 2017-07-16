@@ -1,21 +1,21 @@
+/*layout*/
 .container {
   margin: 0;
   padding: 0;
   height: 100%;
 }
-
-
-
 .layout-body {
     height: 100%;
-    background: #DEDEDE;
+    /* background: #DEDEDE; */
     position: relative;
     padding-top: 60px;
     margin-left: 200px;
     z-index: 1;
     padding-top: 60px;
 }
-
+.layout-body>.ivu-row{
+    padding: 20px;
+}
 .layout-body,
 .layout-left {
     transition-property: margin-left,left;
@@ -44,4 +44,102 @@
     padding-top: 5px;
     width: 100%;
     z-index: 999;
+}
+/*layoutTop*/
+.layout-top {
+    height: 60px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    border-bottom: solid 1px #dddee1;
+    background: #FFF;
+}
+
+.logo {
+    width: 200px;
+    position: absolute;
+}
+
+.logo a {
+    line-height: 60px;
+    font-size: 24px;
+    color: #333;
+    display: block;
+    padding-left: 28px;
+}
+
+.top-control {
+    margin-left: 200px;
+}
+
+.btn-control {
+    margin-top: 10px;
+    margin-right: 5px;
+    float: right;
+}
+
+.btn-control>.ivu-btn {
+    font-size: 18px;
+    border: none;
+    border-radius: 0;
+    margin-left: 20px;
+    border: 1px solid #FFF;
+}
+
+.btn-control>.ivu-btn:hover,
+.btn-control>.ivu-btn:active {
+    border: 1px solid #2b85e4;
+}
+
+.top-control,
+.top-control>div {
+    height: 60px;
+}
+
+.btn-control .iuser {
+    font-size: 16px;
+    margin: 10px 20px 0px 20px;
+}
+
+.iuser a {
+    color: #495060;
+}
+
+.iuser:hover .ivu-icon-arrow-down-b {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: -webkit-transform 0.2s ease-out;
+    -moz-transition: -moz-transform 0.2s ease-out;
+    transition: transform 0.2s ease-out;
+}
+.expandActived{
+      -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transition: -webkit-transform 0.2s ease-out;
+    -moz-transition: -moz-transform 0.2s ease-out;
+    transition: transform 0.2s ease-out;
+}
+.top-left .ivu-btn-group {
+    margin-top: 22px;
+}
+
+.top-right {
+    /* background: yellow; */
+}
+@media print {
+    .ToPrint {
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 15px;
+        font-size: 14px;
+        line-height: 18px;
+    }
 }
