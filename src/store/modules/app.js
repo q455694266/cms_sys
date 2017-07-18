@@ -1,8 +1,9 @@
 const app = {
     state: {
-        layout:{
+        layout: {
             isExpand: true,
-            isFullScreen:false
+            isFullScreen: false,
+            spinShow: false
         },
         navs: {
             current: '/system/main'

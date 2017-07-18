@@ -45,6 +45,15 @@
     width: 100%;
     z-index: 999;
 }
+/*遮罩fix*/
+.ivu-spin-fix{
+    z-index: 1000;
+    opacity: 0.5;
+}
+.ivu-spin-fix .ivu-spin-dot{
+    width: 64px;
+    height: 64px;
+}
 /*layoutTop*/
 .layout-top {
     height: 60px;

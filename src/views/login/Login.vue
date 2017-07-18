@@ -13,8 +13,8 @@
           </Alert>
         </div>
       </Form-item>
-      <Form-item prop="user">
-        <Input type="text" v-model="formLogin.user" placeholder="Username">
+      <Form-item prop="username">
+        <Input type="text" v-model="formLogin.username" placeholder="Username">
         <Icon size="20" type="ios-person-outline" slot="prepend"></Icon>
         </Input>
       </Form-item>
@@ -52,12 +52,12 @@ export default {
         msg: ''
       },
       formLogin: {
-        user: '',
+        username: '',
         password: '',
         checkcode: ''
       },
       ruleForm: {
-        user: [
+        username: [
           { required: true, message: '请填写用户名', trigger: 'blur' }
         ],
         password: [
@@ -75,22 +75,22 @@ export default {
   },
   methods: {
     handleSubmit(name) {
+     
       this.$refs[name].validate((valid) => {
         if (valid) {
           //提交登录信息
-
-          this.loginMsg = {
-            code: 200,
-            msg: '登录成功'
-          }
-          setTimeout(() => {this.$router.push('/system/main');},1500);
-          //this.$Message.success('提交成功!');
+          this.$store.dispatch('LoginSystem', this.formLogin).then(() => {
+            this.loginMsg.code = 200;
+            this.loginMsg.msg = '登录成功';
+            setTimeout(() => {
+              this.$router.push('/system/main');
+            }, 1500);
+          }).catch(error => {
+            this.loginMsg.code = -1;
+            this.loginMsg.msg = '登录失败!'+error;
+          })
         } else {
-          // this.loginMsg = {
-          //   code: 406,
-          //   msg: '登录失败,账号或者密码错误!'
-          // }
-          // this.$Message.error('表单验证失败!');
+          console.log('error submit!');
         }
       })
     },
@@ -108,8 +108,8 @@ export default {
       this.control = setTimeout(() => {
         document.getElementById('captcha').src = this.captchaSrc + '?t=' + new Date().getTime();
       }, 600)
-
     }
+
   }
 }
 </script>

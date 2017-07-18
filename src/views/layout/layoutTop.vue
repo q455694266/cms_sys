@@ -8,7 +8,7 @@
                 <Col class="top-right" span="18" push="6">
                 <Button-group class="btn-control" size="large">
                     <Button type="ghost">帮助</Button>
-                    <Button type="ghost">清除缓存</Button>
+                    <Button type="ghost" @click="clearCache">清除缓存</Button>
                     <Button type="ghost">计划任务</Button>
                     <Dropdown class="iuser">
                         <a href="javascript:void(0)">
@@ -46,6 +46,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import service from '../../util/fetch';
 export default {
     computed: {
         ...mapGetters(['layout'])
@@ -65,7 +66,7 @@ export default {
 
         },
         PrintElem(elem) {
-            var mywindow = window.open('', 'PRINT');
+            var mywindow = window.open('打印窗口', '_blank');
             mywindow.document.write('<html><head><title>' + document.title + '</title>');
             mywindow.document.write('</head><body >');
             mywindow.document.write('<h1>' + document.title + '</h1>');
@@ -79,6 +80,12 @@ export default {
         },
         handlePrint() {
            this.PrintElem(document.getElementsByClassName('layout-body')[0]);
+        },clearCache(){
+            service.post("/api/test").then((res)=>{
+                console.log(res.data);
+            }).catch((error)=>{
+                 console.log(error);
+            });
         }
     }, mounted() {
 

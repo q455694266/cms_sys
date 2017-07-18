@@ -6,20 +6,21 @@
             <router-view></router-view>
             <div class="layout-footer">版权所有www.ziyaweb.com 2016-2018</div>
         </div>
-    
+        <Spin size="large" fix v-if="layout.spinShow"></Spin>
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 import layoutTop from './layoutTop';
 import layoutLeft from './layoutLeft';
+
 export default {
     computed: {
-        ...mapGetters(['layout'])
+        ...mapGetters(['layout','token'])
     },
     data() {
         return {
-
+  
         }
     },
     components: {
@@ -94,15 +95,18 @@ export default {
             }
         },
         $route() {
+          
             //容器滚动条还原到顶部
             this.$refs.mainBody.scrollTop = 0;
         }
+
     },
     mounted() {
         //无法监听到全屏状态下按F11或者Esc取消全屏，
         //通过window.onresize来判断处理
         //如果触发了onresize处于非全屏状态且 state全屏状态为true,则是非操作按钮退出的全屏，需修改状态
         let v = this;
+        console.log('token-main:'+this.token);
         window.onresize = function () {
            //console.log(v.isFullscreen());
             if (!v.isFullscreen()&&v.layout.isFullScreen) {
@@ -115,20 +119,6 @@ export default {
 </script>
 <style scoped>
 @import '/static/css/layout.css';
-
-
-
-/* 
-.layout-body:fullscreen {
-width: 100%;
-margin-left: 0;
-top:60px;
-}
-.layout-body:-webkit-full-screen {
- width: 100%;
- margin-left: 0px;
- top:60px;
-} */
 
 .container {
     width: 100%;

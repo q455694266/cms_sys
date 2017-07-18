@@ -32,6 +32,10 @@ export default {
       this.$refs.leftMenu.currentActiveName = this.navs.current;
     }
 
+  },mounted(){
+    //直接刷新加载需设置当前活动菜单
+    this.$refs.leftMenu.currentActiveName = this.$router.currentRoute.path;
+    
   }
 }
 </script>

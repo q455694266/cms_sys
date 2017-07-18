@@ -1,7 +1,7 @@
 <template>
   <Row>
     <Col span="12" class="col-count">
-    <Row type="flex" gutter="20" justify="start" align="middle">
+    <Row type="flex" :gutter="20" justify="start" align="middle">
       <Col span="6">
       <Badge class="item-count" count="1000" overflow-count="99999999">
         <Icon type="ios-paper" size="128"></Icon>
@@ -36,8 +36,8 @@
       </Col>
       <Col span="6">
       <Badge class="item-count" count="1000" overflow-count="99999999">
-        <Icon type="person-stalker" size="128"></Icon>
-        <a class="item-title">会员</a>
+        <Icon type="ios-list-outline" size="128"></Icon>
+        <a class="item-title">表单</a>
       </Badge>
       </Col>
       <Col span="6">

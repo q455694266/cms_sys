@@ -19,15 +19,25 @@ const SYSUSER = {
 SYSUSER.allow.forEach(o => {
     SYSUSER.urls.push(o.url);
 });
+//前端路由白名单
+const allAllow = ['/system/login'];
 
 //---------------------------------
 //iView.Message.config({top:300});
 router.beforeEach((to, from, next) => {
-    if (SYSUSER.urls.find(url => url == to.fullPath)) {
-        //设置当前导航的路由URL
-        // console.log(to.path);
-        // console.log(store.state.app.navs);
-        //store.state.app.navs.current = to.path;
+    //如果不在白名单且未登录,则跳转到登录页面
+    if(allAllow.indexOf(to.path)==-1&&!store.getters.token){
+         iView.Modal.error({
+                    width:280,
+                    title: '未授权的请求！',
+                    content: '<p>需要登录后才可访问!</p>',
+                    okText: '确定',
+                    onOk: () => {
+                     next('/system/login')
+                    } 
+                });
+    }
+    else  if (SYSUSER.urls.find(url => url == to.fullPath)) {
         iView.LoadingBar.start();
         next();
     }
