@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     handleSubmit(name) {
-     
       this.$refs[name].validate((valid) => {
         if (valid) {
           //提交登录信息
@@ -87,10 +86,11 @@ export default {
             }, 1500);
           }).catch(error => {
             this.loginMsg.code = -1;
-            this.loginMsg.msg = '登录失败!'+error;
+            this.loginMsg.msg =error.response?'登录失败! ':'登录失败! '+error; 
           })
         } else {
           console.log('error submit!');
+          return false;
         }
       })
     },

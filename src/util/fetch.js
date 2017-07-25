@@ -43,6 +43,9 @@ const delError = (errorCode) => {
         case 401:
             modalError('未授权的请求！');
             break;
+        case 433:
+            modalError('用户已锁，请解锁后操作！');
+            break;
         // case 412:
         //     modalError('账号或密码错误！');
         //     break;

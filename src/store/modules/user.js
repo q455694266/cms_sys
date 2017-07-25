@@ -1,4 +1,4 @@
-import { loginSystem } from '../../api/user';
+import { loginSystem } from '@/api/user';
 import Cookies from 'js-cookie';
 const user = {
     state: {
@@ -37,19 +37,6 @@ const user = {
                     reject(error);
                 });
             })
-
-            // loginSystem(userInfo.username, userInfo.password,userInfo.checkcode).then(response => {
-            //     //const data = response.data;
-            //     commit('SET_TOKEN', response.object.token);
-            //     Cookies.set('sys-token',response.object.token);
-            //     //console.log(data.object.token);
-            //     Promise.resolve(response);
-            // }).catch(error => {
-            //     commit('SET_TOKEN','');
-            //     Cookies.remove('sys-token');
-            //    return Promise.reject(error);
-            // });
-
         },
         LogoutSystem({ commit }) {
             logoutSystem().then(response => {

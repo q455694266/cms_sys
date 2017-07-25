@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
 }
 .layout-body {
     height: 100%;
@@ -54,6 +55,11 @@
     width: 64px;
     height: 64px;
 }
+.lockSpin{
+    background:#FFF;
+    opacity: 1;
+}
+
 /*layoutTop*/
 .layout-top {
     height: 60px;

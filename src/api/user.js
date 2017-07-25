@@ -1,4 +1,6 @@
-import service from '../util/fetch';
+import service from '@/util/fetch';
+
+//登录
 export function loginSystem(username, password, checkcode) {
     const data = {
         username,
@@ -11,6 +13,7 @@ export function loginSystem(username, password, checkcode) {
         data
     });
 }
+//登出
 export function logoutSystem(){
     return service({
         url: '/api/logoutSystem',

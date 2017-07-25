@@ -7,6 +7,7 @@ import iView from 'iview';
 import axios from 'axios'; 
 import store from './store/';
 import 'iview/dist/styles/iview.css';
+import '^/css/layout.css';
 Vue.config.productionTip = false
 Vue.use(iView)
 
