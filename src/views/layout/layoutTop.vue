@@ -92,10 +92,10 @@ export default {
             if ($n === 'Set') {
                 //设置
             } else if ($n === 'Lock') {
-                this.$Modal.confirm({
+               this.$Modal.confirm({
                     width: 280,
                     okText: '锁定',
-                    title:'',
+                    title: '',
                     render: (h) => {
                         let inp = h('Input', {
                             props: {
@@ -112,7 +112,6 @@ export default {
                                 input: (val) => {
                                     val = val.replace(/\s+/g, '');
                                     this.lockCheck = val;
-                                    console.log(this.lockCheck);
                                 }
                             }
                         });
@@ -121,24 +120,30 @@ export default {
                                 type: 'warning',
                                 'show-icon': true
                             },
-                            style:{
-                                fontSize:'20px'
+                            style: {
+                                fontSize: '20px'
                             }
-                            // domProps: {
-                            //     innerText: '锁定当前用户'
-                            // }
-                        },'锁定当前用户')
-                        return h('div', {}, [ header,inp])
+
+                        }, '锁定当前用户')
+                    
+                        return h('div', {}, [header, inp])
 
                     },
                     onOk: () => {
-                       // console.log(this.lockCheck.length);
-                         this.$store.dispatch('LockSystem').then(() => {
-                             console.log('用户已锁定！');
-                             console.log(this.isLock);
-                         });
+                        // console.log(this.lockCheck.length);
+                        if (this.lockCheck == '') {
+                            this.$Message.error('请输入锁屏密码！');
+                            return false;    
+                        } else {
+                            this.$store.dispatch('LockSystem',this.lockCheck).then(() => {
+                                console.log('用户已锁定！');
+                                this.lockCheck = '';
+                            });
+                        }
+
                     }
                 });
+               
                 //锁屏
             } else {
                 //登出

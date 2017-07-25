@@ -18,13 +18,11 @@ const app = {
         }
     },
     actions: {
-         LockSystem({ commit }) {
+         LockSystem({ commit },check) {
             return new Promise((resolve, reject) => {
-                lockSystem().then(response => {
+                lockSystem(check).then(response => {
                     Cookies.set('isLock',true);
                     commit('SET_LOCK', true);
-                    // console.log('-----------')
-                    // console.log(response);
                     resolve();
                 }).catch(error => {
                     reject(error);

@@ -1,9 +1,13 @@
 import service from '@/util/fetch';
 //锁屏
-export function lockSystem(){
+export function lockSystem(check){
+    const data ={
+        check
+    }
     return service({
         url: '/api/lockSystem',
-        method: 'post'
+        method: 'post',
+        data:data
     })
 }
 //解锁

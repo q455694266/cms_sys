@@ -96,7 +96,9 @@ export default {
                 document.mozFullScreenElement ||
                 document.webkitFullscreenElement || false;
         }, handleUnlock() {
-            
+            if(this.unlockCheck==""){
+                return false;
+            }
             this.$store.dispatch('UnlockSystem',this.unlockCheck).then(()=>{
                             console.log('解锁！！！');
                             console.log(this.isLock);

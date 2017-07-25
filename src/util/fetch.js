@@ -43,26 +43,34 @@ const delError = (errorCode) => {
         case 401:
             modalError('未授权的请求！');
             break;
+        case 415:
+            modalError('不支持的请求类型');
+            break;
+        case 421:
+            modalError('验证错误！！');
+            break;
+        case 422:
+            modalError('错误次数过多,已锁定！稍后尝试。');
+            break;
         case 433:
             modalError('用户已锁，请解锁后操作！');
             break;
+
         // case 412:
         //     modalError('账号或密码错误！');
         //     break;
         case 444:
-             Modal.confirm({
+            Modal.confirm({
                 width: 280,
                 title: '未授权的请求！',
                 content: '<p>需要登录后才可访问！是否登录？</p>',
                 okText: '确定登录',
                 onOk: () => {
-                    store.dispatch('FedLogOut').then(()=>location.href = '/system/login');
+                    store.dispatch('FedLogOut').then(() => location.href = '/system/login');
                 }
             })
             break;
-        case 415:
-            modalError('不支持的请求类型');
-            break;
+
         case 500:
             modalError('内部错误');
             break;
@@ -79,21 +87,21 @@ const delError = (errorCode) => {
 // respone拦截器
 service.interceptors.response.use(
     response => {
-         store.state.app.layout.spinShow = false;
+        store.state.app.layout.spinShow = false;
         //通过响应状态码来自定义响应处理
         const code = parseInt(response.data.code);
         if (code != 200) {
             delError(code);
-          return Promise.reject(response.data.msg);
+            return Promise.reject(response.data.msg);
         } else {
             return response.data;//只获取数据相关
         }
-        
+
     },
     error => {
         store.state.app.layout.spinShow = false;
         if (error.response) {
-               delError(error.response.status) ;
+            delError(error.response.status);
         }
         return Promise.reject(error);   // 返回接口返回的错误信息
     }
