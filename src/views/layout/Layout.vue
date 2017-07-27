@@ -131,8 +131,8 @@ export default {
         //通过window.onresize来判断处理
         //如果触发了onresize处于非全屏状态且 state全屏状态为true,则是非操作按钮退出的全屏，需修改状态
         let v = this;
-        console.log('token-main:' + this.token);
-        console.log(this.isLock + '+++++++++');
+        // console.log('token-main:' + this.token);
+        // console.log(this.isLock + '+++++++++');
         window.onresize = function () {
             //console.log(v.isFullscreen());
             if (!v.isFullscreen() && v.layout.isFullScreen) {

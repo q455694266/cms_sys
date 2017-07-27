@@ -22,12 +22,11 @@ SYSUSER.allow.forEach(o => {
 });
 //前端路由白名单
 const allAllow = ['/system/login'];
-
 //---------------------------------
 //iView.Message.config({top:300});
 router.beforeEach((to, from, next) => {
     //如果不在白名单且未登录,则跳转到登录页面
-    if(allAllow.indexOf(to.path)==-1&&!store.getters.token){
+    if(allAllow.indexOf(to.path)==-1&&!store.getters.log_in){
          iView.Modal.error({
                     width:280,
                     title: '未授权的请求！',

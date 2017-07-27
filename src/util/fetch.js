@@ -8,19 +8,6 @@ const service = axios.create({
     timeout: 5000,                  // 请求超时时间
     headers: { 'X-Requested-With': 'XMLHttpRequest' }
 });
-
-service.interceptors.request.use((config) => {
-    store.state.app.layout.spinShow = true;
-    if (store.getters.token) {
-        // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
-        config.headers['Z-Token'] = store.getters.token;
-    }
-    return config
-}, (error) => {
-    store.state.app.layout.spinShow = false;
-    Message.error('加载超时 ！');
-    Promise.reject(error);
-})
 //错误提示modal
 const modalError = (errorMsg, errorTitle = '请求错误！') => {
     Modal.error({
@@ -84,6 +71,26 @@ const delError = (errorCode) => {
     }
 }
 
+service.interceptors.request.use((config) => {
+    store.state.app.layout.spinShow = true;
+    // if (store.getters.token) {
+    //     // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
+    //     config.headers['Authrorization'] = store.getters.token;
+    // }
+    return config;
+
+    // if(store.getters.log_in){
+    //     return config;
+    // }else{
+    //     delError(444);
+    //     Promise.reject("未登录.");
+    // }
+    
+}, (error) => {
+    store.state.app.layout.spinShow = false;
+    Message.error('加载超时 ！');
+    Promise.reject(error);
+})
 // respone拦截器
 service.interceptors.response.use(
     response => {

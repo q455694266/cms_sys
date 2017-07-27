@@ -69,7 +69,7 @@ export default {
           { type: 'string', len: 5, message: '验证码错误！', trigger: 'blur' }
         ]
       },
-      captchaSrc: 'http://login.350.net/captcha',
+      captchaSrc: 'http://localhost:80/images/kaptcha.jpg',
       control: false
     }
   },

@@ -2,11 +2,12 @@ import { loginSystem } from '@/api/user';
 import Cookies from 'js-cookie';
 const user = {
     state: {
-        token: Cookies.get('sys-token'),
+        token: Cookies.get('Z-token'),
         roles: [],
         access: [],
         permission: [],
-        props: {}
+        props: {},
+        log_in: Cookies.get('log_in')//是否登录
     },
     mutations: {
         SET_TOKEN: (state, token) => {
@@ -23,6 +24,10 @@ const user = {
         },
         SET_PROPS: (state, props) => {
             state.props = props;
+        },
+        SET_LOG_IN: (state,flag) =>{
+            state.log_in = flag;
+            Cookies.set('log_in',flag);
         }
     },
     actions: {
@@ -30,9 +35,12 @@ const user = {
         LoginSystem({ commit }, userInfo) {
             return new Promise((resolve, reject) => {
                 loginSystem(userInfo.username, userInfo.password, userInfo.checkcode).then(response => {
-                    commit('SET_TOKEN', response.object.token);
-                    Cookies.set('sys-token', response.object.token);
-                    resolve();
+                   //commit('SET_TOKEN', Cookies.get('Z-token'));
+                   //登录成功,更改标志
+                   if(response.code=='200'){
+                        commit('SET_LOG_IN',true);
+                   }
+                   resolve();
                 }).catch(error => {
                     reject(error);
                 });
@@ -53,6 +61,10 @@ const user = {
         resolve();
       });
     },
+    //设置登录标志
+    ControlLogIn({commit},flag){
+        commit('SET_LOG_IN',flag);
+    }
 
     }
 }
