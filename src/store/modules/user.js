@@ -7,7 +7,8 @@ const user = {
         access: [],
         permission: [],
         props: {},
-        log_in: Cookies.get('log_in')//是否登录
+        //log_in: Cookies.get('log_in')//是否登录
+        log_in: sessionStorage.getItem('log_in')
     },
     mutations: {
         SET_TOKEN: (state, token) => {
@@ -27,7 +28,8 @@ const user = {
         },
         SET_LOG_IN: (state,flag) =>{
             state.log_in = flag;
-            Cookies.set('log_in',flag);
+            sessionStorage.setItem('log_in',flag);
+            //Cookies.set('log_in',flag);
         }
     },
     actions: {
@@ -38,7 +40,7 @@ const user = {
                    //commit('SET_TOKEN', Cookies.get('Z-token'));
                    //登录成功,更改标志
                    if(response.code=='200'){
-                        commit('SET_LOG_IN',true);
+                        commit('SET_LOG_IN',1);
                    }
                    resolve();
                 }).catch(error => {
@@ -57,7 +59,8 @@ const user = {
     FedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '');
-        Cookies.remove('sys-token');
+        //Cookies.remove('log_in');
+        sessionStorage.removeItem('log_in');
         resolve();
       });
     },

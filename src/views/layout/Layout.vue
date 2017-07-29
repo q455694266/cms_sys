@@ -120,7 +120,6 @@ export default {
             }
         },
         $route() {
-
             //容器滚动条还原到顶部
             this.$refs.mainBody.scrollTop = 0;
         }

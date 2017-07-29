@@ -30,6 +30,9 @@ const delError = (errorCode) => {
         case 401:
             modalError('未授权的请求！');
             break;
+        case 405:
+            modalError('错误的请求方式！');
+            break;
         case 415:
             modalError('不支持的请求类型');
             break;
