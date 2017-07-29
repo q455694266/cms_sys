@@ -1,7 +1,7 @@
 <template>
   <div class="layout-left">
     <Menu ref="leftMenu" class="nav-menu" width="200px" accordion active-name="/system/main" @on-select="actionTo">
-      <Submenu v-if="route.children&&route.children.length>0&&!route.status" v-for="(route,index) in sys_routers[0].children" :key="index" :name="route.path">
+      <Submenu v-if="route.children&&route.children.length>0&&route.status!=0" v-for="(route,index) in sys_routers[0].children" :key="index" :name="route.path">
         <template slot="title">
           <Icon :type="route.icon" size="20"></Icon>
           {{route.name}}
