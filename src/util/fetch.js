@@ -49,10 +49,11 @@ const delError = (errorCode) => {
         // case 412:
         //     modalError('账号或密码错误！');
         //     break;
+        case 443:
         case 444:
             Modal.confirm({
                 width: 280,
-                title: '未授权的请求！',
+                title: errorCode==443?'授权已过期！':'无效的授权！',
                 content: '<p>需要登录后才可访问！是否登录？</p>',
                 okText: '确定登录',
                 onOk: () => {
@@ -60,7 +61,6 @@ const delError = (errorCode) => {
                 }
             })
             break;
-
         case 500:
             modalError('内部错误');
             break;

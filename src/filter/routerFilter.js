@@ -4,6 +4,13 @@ const Main = r => require.ensure([], () => r(require('@/views/layout/Main')), 'l
 const Login = r => require.ensure([], () => r(require('@/views/login/Login')), 'login')
 const Config = r => require.ensure([], () => r(require('@/views/config/Config')), 'config')
 const Content = r => require.ensure([], () => r(require('@/views/config/Config')), 'content')
+const Pages = r => require.ensure([], () => r(require('@/views/pages/Pages')), 'pages')
+const Product = r => require.ensure([], () => r(require('@/views/product/Product')), 'product')
+const Comment = r => require.ensure([], () => r(require('@/views/comment/Comment')), 'comment')
+const Users = r => require.ensure([], () => r(require('@/views/users/Users')), 'users')
+const Task = r => require.ensure([], () => r(require('@/views/task/Task')), 'task')
+const Datas = r => require.ensure([], () => r(require('@/views/datas/Datas')), 'datas')
+const Counts = r => require.ensure([], () => r(require('@/views/counts/Counts')), 'counts')
 export function initRouter(routers) {
     let routerList = [];
     routers.forEach(v => {
