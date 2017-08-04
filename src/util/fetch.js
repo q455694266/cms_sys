@@ -57,7 +57,7 @@ const delError = (errorCode) => {
                 content: '<p>需要登录后才可访问！是否登录？</p>',
                 okText: '确定登录',
                 onOk: () => {
-                    store.dispatch('FedLogOut').then(() => location.href = '/system/login');
+                   store.dispatch('FedLogOut').then(() => location.href = '/system/login');
                 }
             })
             break;

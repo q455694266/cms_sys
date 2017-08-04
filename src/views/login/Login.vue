@@ -86,7 +86,7 @@ export default {
             }, 1500);
           }).catch(error => {
             this.loginMsg.code = -1;
-            this.loginMsg.msg =error.response?'登录失败! ':'登录失败! '+error; 
+            this.loginMsg.msg = error.response ? '登录失败! ' : '登录失败! ' + error;
           })
         } else {
           console.log('error submit!');
@@ -110,6 +110,8 @@ export default {
       }, 600)
     }
 
+  },
+  mounted() {
   }
 }
 </script>

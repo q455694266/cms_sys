@@ -3,33 +3,29 @@ import Cookies from 'js-cookie';
 const user = {
     state: {
         token: Cookies.get('Z-token'),
-        roles: [],
-        access: [],
-        permission: [],
-        props: {},
-        //log_in: Cookies.get('log_in')//是否登录
+        infos:JSON.parse(localStorage.getItem('userInfos')),
         log_in: sessionStorage.getItem('log_in')
     },
     mutations: {
         SET_TOKEN: (state, token) => {
             state.token = token;
         },
-        SET_ROLES: (state, roles) => {
-            state.roles = roles;
+        SET_INFOS: (state, infos) => {
+            state.infos = infos;
+            localStorage.setItem('userInfos',JSON.stringify(infos))
         },
-        SET_ACCESS: (state, access) => {
-            states.access = access;
+        SET_PROPS:(state,props)=>{
+            state.infos.p = props;
         },
-        SET_PERMISSION: (state, permission) => {
-            state.permission = permission;
+        SET_APIS:(state,apiIds)=>{
+            state.infos.a = apiIds;
         },
-        SET_PROPS: (state, props) => {
-            state.props = props;
+        SET_ROUTERS:(state,routerIds)=>{
+            state.infos.r = routerIds;
         },
         SET_LOG_IN: (state,flag) =>{
             state.log_in = flag;
             sessionStorage.setItem('log_in',flag);
-            //Cookies.set('log_in',flag);
         }
     },
     actions: {
@@ -41,6 +37,7 @@ const user = {
                    //登录成功,更改标志
                    if(response.code=='200'){
                         commit('SET_LOG_IN',1);
+                        commit('SET_INFOS',response.object);
                    }
                    resolve();
                 }).catch(error => {
