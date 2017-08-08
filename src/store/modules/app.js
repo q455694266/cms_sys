@@ -1,5 +1,6 @@
 import { lockSystem, unlockSystem, loadRouters } from '@/api/app';
 import Cookies from 'js-cookie';
+
 const app = {
     state: {
         isLock: Cookies.get('isLock'),
@@ -11,7 +12,8 @@ const app = {
         navs: {
             current: '/system/main'
         },
-        sys_routers: JSON.parse(localStorage.getItem('app_routers'))
+        sys_routers: JSON.parse(localStorage.getItem('app_routers')),
+        currentTopRouter:null
     },
     mutations: {
         'SET_LOCK': (state, isLock) => {
@@ -22,7 +24,9 @@ const app = {
             if(sys_routers){
                     localStorage.setItem('app_routers', JSON.stringify(sys_routers));
             }
-            
+        },
+        'SET_CURRENT_TOP_ROUTER':(state,router)=>{
+            state.currentTopRouter = router;
         }
     },
     actions: {

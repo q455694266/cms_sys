@@ -172,6 +172,10 @@ export default {
                 }]
 
     }
+  },methods:{
+
+  },mounted(){
+   // console.log(this.$router.matched);
   }
 }
 </script>

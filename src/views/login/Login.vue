@@ -82,7 +82,7 @@ export default {
             this.loginMsg.code = 200;
             this.loginMsg.msg = '登录成功';
             setTimeout(() => {
-              this.$router.push('/system/main');
+              this.$router.push('/system');
             }, 1500);
           }).catch(error => {
             this.loginMsg.code = -1;

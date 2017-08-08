@@ -13,6 +13,7 @@ const Datas = r => require.ensure([], () => r(require('@/views/datas/Datas')), '
 const Counts = r => require.ensure([], () => r(require('@/views/counts/Counts')), 'counts')
 export function initRouter(routers) {
     let routerList = [];
+    //.filter(r=>r.groupId==1)
     routers.forEach(v => {
         if (v.component) {
             v.component = eval(v.component);
@@ -34,8 +35,8 @@ export function initRouter(routers) {
             v.children = Array.from(children);
         }
     });
-    console.log('路由组装完成');
-    console.log(routerList);
+    //console.log('路由组装完成');
+   // console.log(routerList);
     return routerList;
 
 }

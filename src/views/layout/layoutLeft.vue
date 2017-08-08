@@ -1,7 +1,7 @@
 <template>
   <div class="layout-left">
-    <Menu ref="leftMenu" class="nav-menu" width="200px" accordion active-name="/system/main" @on-select="actionTo">
-      <Submenu v-if="route.children&&route.children.length>0&&route.status!=0" v-for="(route,index) in sys_routers[0].children" :key="index" :name="route.path">
+    <Menu ref="leftMenu" class="nav-menu" width="200px" accordion :theme="theme1" :open-names="open" :active-name="active" @on-select="actionTo">
+      <Submenu v-if="route.children&&route.children.length>0&&route.status!=0" v-for="(route,index) in topRouter.children" :key="index" :name="route.path">
         <template slot="title">
           <Icon :type="route.icon" size="20"></Icon>
           {{route.name}}
@@ -21,23 +21,32 @@
 import { mapGetters } from 'vuex';
 export default {
   computed: {
-    ...mapGetters(['navs','sys_routers'])
+    ...mapGetters(['navs','sys_routers','topRouter'])
   },
   data() {
     return {
+           theme1: 'light',
+            open: [],
+            active: "1-2"
     }
   }, methods: {
     actionTo(e) {
       this.$router.push(e);
-      this.$refs.leftMenu.currentActiveName = this.navs.current;
+      this.$refs.leftMenu.currentActiveName = e;
     }
-
   },mounted(){
     //直接刷新加载需设置当前活动菜单
     this.$refs.leftMenu.currentActiveName = this.$router.currentRoute.path;
-    
-  }
-}
+     this.$nextTick(function() {
+               // this.open = ["2"];
+               // this.active = ["1-2"];
+                this.$refs.leftMenu.updateOpened();
+                this.$refs.leftMenu.updateActiveName();
+                
+       })
+  },watch: {
+   
+}}
 </script>
 
 <style scoped>
