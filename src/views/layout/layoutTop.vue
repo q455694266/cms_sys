@@ -6,7 +6,7 @@
         <div class="top-control">
             <Row type="flex">
                 <Col class="top-right" span="18" push="6">
-                <Menu mode="horizontal" theme="light" active-name="/system" style="display:inline;" @on-select="actionTo">
+                <Menu ref="topMenu" mode="horizontal" theme="light" :active-name="$route.matched[0].path" style="display:inline;" @on-select="actionTo">
                     <Menu-item v-if="router.groupId==1" v-for="(router,index) in sys_routers" :name="router.path" :key="index">
                         {{router.name}}
                     </Menu-item>
@@ -45,8 +45,8 @@
                         <Icon type="ios-printer-outline" size="20"></Icon>
                     </Button>
                 </Button-group>
-                <Breadcrumb style="display: inline;position: absolute;bottom: 10px;margin-left: 10px;">
-                    <Breadcrumb-item v-for="(item,index) in breadcrumb" href="/" :key="index">{{item.name}}</Breadcrumb-item>
+                <Breadcrumb  style="display: inline;position: absolute;bottom: 10px;margin-left: 10px;">
+                    <Breadcrumb-item v-for="(item,index) in $route.matched" :href="item.path" :key="index">{{item.name}}</Breadcrumb-item>
                 </Breadcrumb>
                 </Col>
             </Row>
@@ -64,14 +64,12 @@ export default {
         return {
             expandActived: '',
             minMaxIcon: 'arrow-expand',
-            lockCheck: '',
-            breadcrumb:this.$router.currentRoute.matched
+            lockCheck: ''
         }
     }, methods: {
         //模块导航 
         actionTo(e) {
             this.$router.push(e);
-            console.log(e);
         },
         handleExpand() {
             this.layout.isExpand = !this.layout.isExpand;
@@ -79,7 +77,6 @@ export default {
         },
         handleFullscreen() {
             this.layout.isFullScreen = !this.layout.isFullScreen;
-
         },
         PrintElem(elem) {
             var mywindow = window.open('打印窗口', '_blank');
@@ -145,7 +142,6 @@ export default {
 
                     },
                     onOk: () => {
-                        // console.log(this.lockCheck.length);
                         if (this.lockCheck == '') {
                             this.$Message.error('请输入锁屏密码！');
                             return false;
@@ -166,15 +162,12 @@ export default {
             console.log($n);
         }
     }, mounted() {
-        //console.log(this.$parent.$refs['lockCheck']);
-        console.log(this.$router.currentRoute.matched);
-        console.log(1111);
+
     }, watch: {
         'layout.isFullScreen': function () {
             this.minMaxIcon = this.layout.isFullScreen ? 'arrow-shrink' : 'arrow-expand';
         },
         '$route'(){
-           this.breadcrumb  = this.$router.currentRoute.matched;
         }
     }
 

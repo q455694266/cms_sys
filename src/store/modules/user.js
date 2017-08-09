@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 const user = {
     state: {
         //token: Cookies.get('Z-token'),
-        infos:JSON.parse(localStorage.getItem('userInfos')),
+        infos:JSON.parse(sessionStorage.getItem('userInfos')),
         log_in: sessionStorage.getItem('log_in')
     },
     mutations: {
@@ -12,7 +12,7 @@ const user = {
         // },
         SET_INFOS: (state, infos) => {
             state.infos = infos;
-            localStorage.setItem('userInfos',JSON.stringify(infos))
+            sessionStorage.setItem('userInfos',JSON.stringify(infos))
         },
         SET_PROPS:(state,props)=>{
             if(state.infos)

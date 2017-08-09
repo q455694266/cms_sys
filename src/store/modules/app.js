@@ -27,6 +27,9 @@ const app = {
         },
         'SET_CURRENT_TOP_ROUTER':(state,router)=>{
             state.currentTopRouter = router;
+        },
+        'SET_NAVS_CURRENT':(state,path)=>{
+            state.navs.current = path;
         }
     },
     actions: {

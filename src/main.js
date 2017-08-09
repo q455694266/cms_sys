@@ -16,20 +16,6 @@ Vue.use(iView)
 /**
  * 同步加载路由信息
  * */
-
-
-
-// router.addRoutes(store.getters.testRouters);
-
-// router.beforeEach((to, from, next) => {
-//     //顶级路由
-//    let topRouter = store.getters.testRouters.find((r)=>r.meta.id==to.matched[0].meta.id);
-//    store.commit('SET_CURRENT_TOP_ROUTER',topRouter);
-//     console.log( store.getters.topRouter);
-//     next()
-// })
-
-
 if (!store.getters.sys_routers) {
     $jq.get({
         url: '/api/common/routers.json',
@@ -99,10 +85,9 @@ if (store.getters.sys_routers) {
         }
     });
     router.afterEach((to, from, next) => {
-        store.state.app.navs.current = to.path;
+        store.commit('SET_NAVS_CURRENT',to.path);
         iView.LoadingBar.finish();
     });
-
     //---------------------
 
     console.log('构造完成，已添加。');
