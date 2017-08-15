@@ -4,7 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import iView from 'iview';
-import axios from 'axios';
+// import axios from 'axios';
+// import service from '@/util/fetch';
 //同步请求工具
 import $jq from 'jquery';
 import store from './store/';
@@ -13,6 +14,8 @@ import '^/css/layout.css';
 
 Vue.config.productionTip = false
 Vue.use(iView)
+
+//Vue.use(service);
 /**
  * 同步加载路由信息
  * */

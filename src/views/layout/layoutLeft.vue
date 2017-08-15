@@ -3,15 +3,15 @@
     <Menu ref="leftMenu" class="nav-menu" :open-names="open" :active-name="navs.current" width="200px" accordion  :theme="theme1"  @on-select="actionTo">
       <Submenu v-if="route.children&&route.children.length>0&&route.status!=0" v-for="(route,index) in topRouter.children" :key="index" :name="route.path">
         <template slot="title">
-          <Icon v-if="route.icon" :type="route.icon" size="20"></Icon>
+          <Icon v-if="route.icon" :type="route.icon" size="24"></Icon>
           {{route.name}}
         </template>
         <Menu-item v-for="(routeChild,index) in  route.children" :key="index" :name="routeChild.path">{{routeChild.name}}
-          <Icon v-if="routeChild.icon" :type="routeChild.icon" size="20"></Icon>
+          <Icon v-if="routeChild.icon" :type="routeChild.icon" size="24"></Icon>
         </Menu-item>
       </Submenu>
       <Menu-item v-else :name="route.path">
-        <Icon v-if="route.icon" :type="route.icon" size="20"></Icon>
+        <Icon v-if="route.icon" :type="route.icon" size="24"></Icon>
         {{route.name}}
       </Menu-item>
     </Menu>

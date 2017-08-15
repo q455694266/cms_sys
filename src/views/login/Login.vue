@@ -14,12 +14,12 @@
         </div>
       </Form-item>
       <Form-item prop="username">
-        <Input type="text" v-model="formLogin.username" placeholder="Username">
+        <Input type="text" v-model="formLogin.username" placeholder="帐号">
         <Icon size="20" type="ios-person-outline" slot="prepend"></Icon>
         </Input>
       </Form-item>
       <Form-item prop="password">
-        <Input type="password" v-model="formLogin.password" placeholder="Password">
+        <Input type="password" v-model="formLogin.password" placeholder="密码">
         <Icon size="20" type="ios-locked-outline" slot="prepend"></Icon>
         </Input>
       </Form-item>

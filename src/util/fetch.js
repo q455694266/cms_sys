@@ -18,6 +18,9 @@ const modalError = (errorMsg, errorTitle = '请求错误！') => {
 }
 const delError = (errorCode) => {
     switch (errorCode) {
+         case 0:
+            modalError('操作失败!');
+            break;
         case 403:
             modalError('拒绝访问!');
             break;
@@ -36,16 +39,15 @@ const delError = (errorCode) => {
         case 415:
             modalError('不支持的请求类型');
             break;
-        case 421:
-            modalError('验证错误！！');
-            break;
+        // case 421:
+        //     modalError('验证错误！！');
+        //     break;
         case 422:
             modalError('错误次数过多,已锁定！稍后尝试。');
             break;
         case 433:
             modalError('用户已锁，请解锁后操作！');
             break;
-
         // case 412:
         //     modalError('账号或密码错误！');
         //     break;

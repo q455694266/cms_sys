@@ -29,7 +29,6 @@
 import { mapGetters } from 'vuex';
 import layoutTop from './layoutTop';
 import layoutLeft from './layoutLeft';
-
 export default {
     computed: {
         ...mapGetters(['layout', 'token', 'isLock'])

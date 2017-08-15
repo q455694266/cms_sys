@@ -21,4 +21,3 @@ export function unlockSystem(check) {
         data: data
     })
 }
-
