@@ -9,10 +9,10 @@
         <Spin size="large" fix v-if="layout.spinShow"></Spin>
         <Spin class="lockSpin" size="large" fix v-if="isLock">
             <div style="width:240px;margin:0 auto;">
-              <Alert type="warning" show-icon>
-        <h2>用户已锁定！</h2>
-        <Icon size="20" type="information-circled" slot="icon"></Icon>
-    </Alert>
+                <Alert type="warning" show-icon>
+                    <h2>用户已锁定！</h2>
+                    <Icon size="20" type="information-circled" slot="icon"></Icon>
+                </Alert>
                 <Input type="password" v-model="unlockCheck">
                 <span slot="prepend">
                     <Icon type="ios-unlocked-outline" size="20"></Icon>
@@ -95,13 +95,13 @@ export default {
                 document.mozFullScreenElement ||
                 document.webkitFullscreenElement || false;
         }, handleUnlock() {
-            if(this.unlockCheck==""){
+            if (this.unlockCheck == "") {
                 return false;
             }
-            this.$store.dispatch('UnlockSystem',this.unlockCheck).then(()=>{
-                            console.log('解锁！！！');
-                            console.log(this.isLock);
-                            this.unlockCheck = '';
+            this.$store.dispatch('UnlockSystem', this.unlockCheck).then((res) => {
+                this.unlockCheck = '';
+            }).catch(error=>{
+                this.$Message.error("解锁密码错误！");
             });
         }
 

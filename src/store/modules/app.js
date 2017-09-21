@@ -49,8 +49,7 @@ const app = {
                 unlockSystem(check).then(response => {
                     Cookies.remove('isLock');
                     commit('SET_LOCK', 0);
-                    console.log(response);
-                    resolve();
+                    resolve(response);
                 }).catch(error => {
                     reject(error);
                 });

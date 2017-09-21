@@ -16,11 +16,12 @@ const modalError = (errorMsg, errorTitle = '请求错误！') => {
         content: '<p>' + errorMsg + '</p>'
     });
 }
+//后端Response直接返回错误响应状态码的处理
 const delError = (errorCode) => {
     switch (errorCode) {
-         case 0:
-            modalError('操作失败!');
-            break;
+        case 0:
+        modalError('操作失败!');
+         break;
         case 403:
             modalError('拒绝访问!');
             break;
@@ -55,11 +56,11 @@ const delError = (errorCode) => {
         case 444:
             Modal.confirm({
                 width: 280,
-                title: errorCode==443?'授权已过期！':'无效的授权！',
+                title: errorCode == 443 ? '授权已过期！' : '无效的授权！',
                 content: '<p>需要登录后才可访问！是否登录？</p>',
                 okText: '确定登录',
                 onOk: () => {
-                   store.dispatch('FedLogOut').then(() => location.href = '/system/login');
+                    store.dispatch('FedLogOut').then(() => location.href = '/system/login');
                 }
             })
             break;
@@ -90,7 +91,7 @@ service.interceptors.request.use((config) => {
     //     delError(444);
     //     Promise.reject("未登录.");
     // }
-    
+
 }, (error) => {
     store.state.app.layout.spinShow = false;
     Message.error('加载超时 ！');
@@ -103,7 +104,7 @@ service.interceptors.response.use(
         //通过响应状态码来自定义响应处理
         const code = parseInt(response.data.code);
         if (code != 200) {
-            delError(code);
+            modalError(response.data.msg,'操作失败!');
             return Promise.reject(response.data.msg);
         } else {
             return response.data;//只获取数据相关

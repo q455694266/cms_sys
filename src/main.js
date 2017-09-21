@@ -7,20 +7,21 @@ import iView from 'iview';
 // import axios from 'axios';
 // import service from '@/util/fetch';
 //同步请求工具
-import $jq from 'jquery';
+import $ from 'jquery';
 import store from './store/';
 import 'iview/dist/styles/iview.css';
 import '^/css/layout.css';
-
+//截图工具
+import Croppa from 'vue-croppa'
 Vue.config.productionTip = false
 Vue.use(iView)
-
+Vue.use(Croppa) 
 //Vue.use(service);
 /**
  * 同步加载路由信息
  * */
 if (!store.getters.sys_routers) {
-    $jq.get({
+    $.get({
         url: '/api/common/routers.json',
         async: false,
         success: function (data) {
@@ -112,6 +113,5 @@ new Vue({
     components: { App },
     mounted() {
         console.log('创建完成');
-
     }
 })

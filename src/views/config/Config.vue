@@ -1,64 +1,61 @@
 <template>
   <Row>
     <Col class="left" span="24">
-    <Tabs type="card">
-      <Tab-pane label="站点设置">
-        <Form :model="form1" :label-width="100">
+    <Tabs v-model="tabActived" type="card" @on-click="tabHandle">
+      <Tab-pane label="站点设置" name="site">
+        <Form  :label-width="100">
           <Form-item label="站点名称">
-            <Input v-model="form1.siteName"></Input>
+            <Input v-model="configs.SITE_NAME.value"></Input>
           </Form-item>
           <Form-item label="站点域名">
-            <Input v-model="form1.domain"></Input>
+            <Input v-model="configs.SITE_DOMAIN.value"></Input>
           </Form-item>
           <Form-item label="站点LOGO">
-  
-          </Form-item>
-          <Form-item label="站点图标">
+            <croppa :width="configs.SITE_LOGO_W.value" 
+            :height="configs.SITE_LOGO_H.value" 
+            v-model="logoCroppa" 
+            initial-size="cover" :quality="1" 
+            accept=".jpeg,.png" placeholder="上传图片"
+             :placeholder-font-size="20" :show-remove-button="true"
+              :initial-image="configs.SITE_LOGO.value+'?t='+new Date().getTime()"
+               :prevent-white-space="true"></croppa>
+            <div class="right-control">
+              <Slider :max="240" :min="30" v-model="configs.SITE_LOGO_W.value"  show-input></Slider>
+              <Slider :max="120" :min="30" style="margin-top: 30px;" v-model="configs.SITE_LOGO_H.value" number show-input></Slider>
+            </div>
           </Form-item>
           <Form-item label="站点状态">
-            <i-switch v-model="form1.siteStatus" size="large">
+            <i-switch v-model="configs.SITE_ON.value" size="large">
               <span slot="open">开启</span>
               <span slot="close">关闭</span>
             </i-switch>
           </Form-item>
-          <Form-item v-if="!form1.siteStatus" label="站点提示">
-            <Input v-model="form1.closeMsg" type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
+          <Form-item v-if="!configs.SITE_ON.value" label="站点提示">
+            <Input v-model="configs.SITE_OFF_MSG.value" type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
           </Form-item>
           <Form-item>
-            <Button type="primary">提交</Button>
+            <Button type="primary" @click="postConfig(1)">提交</Button>
             <Button type="ghost" style="margin-left: 8px">取消</Button>
           </Form-item>
         </Form>
       </Tab-pane>
-      <Tab-pane label="会员设置">标签二的内容</Tab-pane>
-      <Tab-pane label="SEO设置">
-        <Form :model="form3" :label-width="100">
+      <Tab-pane label="会员设置" name="member">标签二的内容</Tab-pane>
+      <Tab-pane label="SEO设置" name="seo">
+        <Form :label-width="100">
           <Form-item label="站点标题 ">
-            <Input v-model="form3.siteTitle"></Input>
+            <Input v-model="configs.SITE_TITLE.value"></Input>
           </Form-item>
           <Form-item label="站点关键词 ">
-            <Input v-model="form3.siteKeywords"></Input>
+            <Input v-model="configs.SITE_KEYWORDS.value"></Input>
           </Form-item>
           <Form-item label="站点描述">
-            <Input v-model="form3.siteDescription" type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
+            <Input v-model="configs.SITE_DESCRIPTION.value" type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
           </Form-item>
   
           <hr style="border: solid 1px #f3f3f3;">
           <Form-item label="友情链接" style="padding-bottom:80px;">
-  
-            <Modal v-model="MaddLinkGroup" title="新增友情链接" @on-ok="addLink">
-              <Form>
-                <Form-item label="站点标题 ">
-                  <Input></Input>
-                </Form-item>
-              </Form>
-            </Modal>
             <div class="link-header-control">
               <Button-group>
-                <Button type="primary" @click="MaddLinkGroup = true">
-                  <Icon type="plus-round"></Icon>
-                  新增分组
-                </Button>
                 <Button type="primary" @click="addLink">
                   新增链接
                   <Icon type="plus-round"></Icon>
@@ -85,7 +82,9 @@
               <Col span="6">
               <Input v-model="link.link"></Input>
               </Col>
-              <Col span="4">缩略图</Col>
+              <Col span="4">
+              <croppa class="link-croppa" :width="120" :height="60" v-model="link.temp" placeholder="上传图片" :quality="1" accept=".jpeg,.png" placeholder-color="#FFF" @image-remove="removeImg(link)" :placeholder-font-size="20" :show-remove-button="true" :initial-image="link.img"></croppa>
+              </Col>
               <Col span="2">
               <i-switch v-model="link.status" size="large">
                 <span slot="open">显示</span>
@@ -94,7 +93,7 @@
               </Col>
               <Col span="2">
               <Select v-model="link.groupId">
-                <Option v-for="(g,i) in  linkGroups" :value="g.id" :key="i">{{g.name}}</Option>
+                <Option v-for="(g,i) in  3" :value="g" :key="i">{{'分组'+g}}</Option>
               </Select>
               </Col>
               <Col span="2">
@@ -119,52 +118,125 @@
   </Row>
 </template>
 <script>
-import { getAllLinks, updateLink, deleteLink } from '@/api/model/link';
+import 'vue-croppa/dist/vue-croppa.css';
+import { getAllLinks, addLink, updateLink, deleteLink, uploadLinkImg } from '@/api/model/link';
+import { getAllConfigs, updateConfigs } from '@/api/model/config';
 export default {
-  created() {
-    getAllLinks().then(res => {
-      if (res.code == 200) {
-        res.object.forEach(v => { v.status = !!v.status });
-        this.friendsLink = res.object;
+  beforeCreate() {
+    getAllConfigs().then(res => {
+     
+      if (!res.object) {
+        this.$Notice.error({ title: '配置加载出错！！' });
       } else {
-        this.$Message.error('友情链接加载失败 。。');
+        //重构config
+        res.object.forEach(c => {
+          this.configs[c.name] = c;
+        });
+        // console.log('-------------');
+        console.log(this.configs);
       }
     }).catch(error => {
-      this.$Message.error('友情链接加载失败 。。');
+      this.$Notice.error({ title: '配置加载出错！！' });
     });
   },
   data() {
     return {
-      MaddLinkGroup: false,
-      form1: {
-        siteName: '子牙建站',
-        domain: 'www.ziyaweb.com',
-        siteStatus: true,
-        closeMsg: '网站维护中。。。。。',
-        switch: true,
-        date: '',
-        time: '',
-        slider: [20, 50],
-        textarea: ''
+      configs: {
+        SITE_NAME: {
+          value: ''
+        },
+        SITE_DOMAIN: {
+          value: ''
+        },
+        SITE_LOGO: {
+          value: '',
+          temp:{}
+        },
+        SITE_LOGO_W: {
+          value: 120
+        },
+        SITE_LOGO_H: {
+          value: 60
+        },
+        SITE_ON: {
+          value: false
+        },
+        SITE_OFF_MSG: {
+          value: ''
+        },
+        SITE_TITLE: {
+          value: ''
+        },
+        SITE_KEYWORDS: {
+          value: ''
+        },
+        SITE_DESCRIPTION: {
+          value: ''
+        }
       },
-      form3: {
-        siteTitle: '专业的建站公司',
-        siteKeywords: '南宁建站,子牙建站,一流建站公司',
-        siteDescription: '66666666666666666666666666666666'
-      },
-      friendsLink: [],
-      linkGroups: [
-        { id: 1, name: '首页友情链接' },
-        { id: 2, name: '合作伙伴' },
-        { id: 3, name: '战略合作伙伴' }]
+      logoCroppa:{},
+      tabActived: 'site',
+      friendsLink: []
     }
   },
+  computed: {
+
+  },
   methods: {
+    postConfig(flag){
+        //组装数据
+      let data=[];
+      if(flag==1&&this.logoCroppa.hasImage()){
+        //先更新logo
+       this.configs.SITE_LOGO.value= this.logoCroppa.generateDataUrl('image/jpeg', 0.8);
+      }
+      for(let config in this.configs){
+        if(flag==this.configs[config].groupId){
+          data.push(this.configs[config]); 
+        }
+      }
+      updateConfigs(data).then(res=>{
+        this.$Notice.success({title:"配置保存成功!"});
+      }).catch(error=>{
+         this.$Notice.error({title:"配置保存失败!"});
+      });
+    },
+    removeImg(link) {
+      link.img = '';
+    },
+    tabHandle() {
+      if (this.tabActived == "seo" && this.friendsLink.length == 0) {
+        this.initLinkData();
+      }
+    },
+    initLinkData() {
+      getAllLinks().then(res => {
+        res.object.forEach(v => { v.status = !!v.status });
+        this.friendsLink = res.object;
+      }).catch(error => {
+        this.$Message.error('友情链接加载失败 。。');
+      });
+    },
     getAllLinks() {
       return getAllLinks();
     },
+    uploadLinkImg(link) {
+      link.temp.generateBlob((blob) => {
+        if (blob) {
+          let formData = new FormData();
+          formData.append('id', link.id);
+          formData.append('linkImg', blob);
+          uploadLinkImg(formData).then(res => {
+            link.img = res.object.url;
+          }).catch(error => {
+            this.$Message.error('图片上传 失败 ');
+          })
+        }
+      }, 'image/jpeg', 1);
+    },
     updateLink(link) {
       updateLink(link).then(res => {
+        this.uploadLinkImg(link);
         this.$Notice.success({
           title: '链接更新成功！'
         })
@@ -177,12 +249,31 @@ export default {
       });
     },
     postLink(link) {
-      console.log(service);
-      //link.status = link.status?1:0;
-      // this.$store.dispatch('AddLink',link).then(()=>{
-      // }).catch(error=>{
-      //   console.log(error);
-      // });
+      if ($.trim(link.name) == "" || $.trim(link.link) == "") {
+        this.$Message.error("链接名称和链接不能为空!");
+        return false;
+      }
+      else if (!/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(link.link)) {
+        this.$Message.error("链接格式错误!");
+      }
+      else {
+        addLink(link).then((res) => {
+          //更新ID为返回ID
+          link.id = res.object;
+          let index = this.friendsLink.findIndex(l => l.index == link.index);
+          //用set更新数组 
+          this.$set(this.friendsLink, index, link);
+          //上传图片
+          this.uploadLinkImg(link);
+          this.$Notice.success({
+            title: '链接添加成功！'
+          })
+        }).catch(error => {
+          this.$Notice.error({
+            title: '新增失败!'
+          });
+        });
+      }
     },
     addLink() {
       this.friendsLink.push({
@@ -216,11 +307,20 @@ export default {
       }
     }
   }, computed: {
-    // friendsLinkData: function () {
-    //   return this.friendsLink.forEach(v => { v.status = v.status == 1 })
-    // }
+
   }, mounted() {
 
+  }, watch: {
+    'configs.SITE_ON.value'(val) {
+        if(typeof val==='string')
+        this.configs.SITE_ON.value= (val=='true');
+    },
+    'configs.SITE_LOGO_W.value'(val) {
+      this.configs.SITE_LOGO_W.value = Number(val);
+    },
+    'configs.SITE_LOGO_H.value'(val) {
+      this.configs.SITE_LOGO_H.value = Number(val);
+    }
   }
 }
 </script>
@@ -239,5 +339,11 @@ export default {
 .link-item {
   margin-top: 10px;
   text-align: center;
+}
+
+.right-control {
+  display: inline-block;
+  margin-left: 20px;
+  width: 480px;
 }
 </style>

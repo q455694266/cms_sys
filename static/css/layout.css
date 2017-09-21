@@ -161,3 +161,7 @@
         line-height: 18px;
     }
 }
+/*line-height导致图片上传控件高度bug*/
+.ivu-form-item-content{
+    line-height: inherit;
+}
